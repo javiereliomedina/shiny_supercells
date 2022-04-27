@@ -6,3 +6,6 @@ Coffee”](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)
 
 Implementation of [supercells](https://nowosad.github.io/supercells/)
 r-package on Shiny.
+
+Link to the app:  [https://javierelio.shinyapps.io/supercells/](https://javierelio.shinyapps.io/supercells/)
+
