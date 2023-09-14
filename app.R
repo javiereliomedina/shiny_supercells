@@ -19,7 +19,7 @@ ui <- fluidPage(
   p("This Shiny app is an implementation of the R-package",
     a("supercells.", href = "https://jakubnowosad.com/supercells/index.html"),
     "Please read the package manual for more information, I am only a user and
-      have no developed it (I just found it very interesting!!)"),
+      have no developed it (I've just found it very interesting!!)"),
   
   fluidRow(
     column(2,
@@ -31,21 +31,28 @@ ui <- fluidPage(
   fluidRow(
     
     # Parameter for supercells
-    column(2,
-           
-           numericInput("k", "Number of supercells desired", 
-                        value = 50,
-                        min = 50, max = 5000, step = 50)
-    ),
-    column(2,
-           numericInput("compactness", "Compactness", 
-                        value = 1,
-                        min = 1, max = 20, step = 1)
-    ),
+    column(2, numericInput("k", "Number of supercells", 
+                           value = 50,
+                           min = 50, max = 5000, step = 50)
+           ),
+    column(2, numericInput("compactness", "Compactness",
+                           value = 1,
+                           min = 1, max = 20, step = 1)
+           ),
     column(2, selectInput("dist_fun", "Distance function", distance)),
     column(2, selectInput("avg_fun", "Averaging function", averaging)),
-    column(2, selectInput("transform", "Transform", transformations))
+    column(2, selectInput("clean", "Clean",
+                          choices = c(TRUE, FALSE),
+                          selected = TRUE))
+    ),
+  
+  fluidRow(
     
+    column(2, numericInput("iter", "Iterations", 
+                           value = 10,
+                           min = 5, max = 50, step = 5)
+           ),
+    column(2, selectInput("transform", "Transform", transformations))
     
   ),
   
@@ -97,9 +104,11 @@ server <- function(input, output, session) {
                compactness = input$compactness,
                dist_fun = input$dist_fun,
                avg_fun = input$avg_fun,
+               clean = as.logical(input$clean),
+               iter = input$iter,
                transform = input$transform
-    )
-  })
+               )
+    })
   
   # Plots
   output$plot_in <- renderPlot({
